@@ -14,10 +14,7 @@ void Map::draw() {
   std::cout << "Map: " << std::endl;
   for (int i = 0; i < kMapSize; i++) {
     for (int j = 0; j < kMapSize; j++) {
-      //if(array_[i][j] == 0)
-        std::cout << array_[i][j];
-      //else
-      //  std::cout << well;
+      std::cout << array_[i][j];
     }
     std::cout << '\n';
   }

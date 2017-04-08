@@ -6,9 +6,10 @@ class Ship {
  public:
    Ship();
    Ship(int size, bool vertical);
+   int check_status();
 
    int size_;
    bool vertical_;
    std::pair<int, int> coordinates_;
-   std::vector<int> status_;
+   std::vector<bool> status_;
 };
