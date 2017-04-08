@@ -1,5 +1,9 @@
 #include "ship.h"
 
-void Ship::draw() {
+Ship::Ship() {}
 
-}
+Ship::Ship(int size, bool vertical)
+  : size_(size),
+    vertical_(vertical),
+    coordinates_(),
+    status_(size) {}

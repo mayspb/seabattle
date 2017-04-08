@@ -1,21 +1,22 @@
 ﻿#pragma once
 #include <iostream>
+#include <vector>
 #include "ship.h"
 
 class Map {
  public:
   Map();
 
- 	static const int kSize_ = 10;
- 	int array_[kSize_][kSize_];
-  char well_ = '■';
-  char damaged_ = '¤';
-  char destroyed_ = 'X';
+  void draw();
+  void create_ships();
+  void arrange_ships();
 
- 	void draw();
- 	void arrange_ships();
+  static const int kMapSize = 10;
+  int array_[kMapSize][kMapSize];
+  std::vector<Ship> ships_;
 
  private:
-  void generate_random_place();
-  bool check_location(int x, int y);
+  void generate_random_place(Ship &ship);
+  bool check_location(int x, int y, Ship &ship);
+  void place_ship(Ship &ship);
 };
