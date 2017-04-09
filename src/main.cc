@@ -1,4 +1,6 @@
 ﻿#include <iostream>
+#include <thread>
+#include <chrono>
 #include "map.h"
 #include "input.h"
 #include "process.h"
@@ -53,8 +55,10 @@ int main()
           return 0;
         }
       }
-    } else
+    } else {
       std::cout << "\nInput mask: first symbol - [a-jA-J]; second - [1-10] \nFor example, 'b5' \nOr input 'q' to exit.\n" << std::endl;
+      std::this_thread::sleep_for(std::chrono::seconds(2));
+    }
   }
 
   return 0;
