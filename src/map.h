@@ -1,16 +1,18 @@
 ﻿#pragma once
 #include <iostream>
 #include <vector>
+#include <string>
 #include "ship.h"
 
 class Map {
  public:
   Map();
 
-  void draw();
+  void draw(std::string text);
   void create_ships();
   void arrange_ships();
   int find_ship(int n_column, int n_string);
+  void add_ship();
 
   static const int kMapSize = 10;
   char array_[kMapSize][kMapSize];

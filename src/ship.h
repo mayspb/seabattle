@@ -12,5 +12,5 @@ class Ship {
    int size_;
    bool vertical_;
    std::pair<int, int> coordinates_;
-   std::vector<bool> status_;
+   std::vector<bool> damages_;
 };

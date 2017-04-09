@@ -13,9 +13,11 @@ Map::Map() {
   }
 }
 
-void Map::draw() {
-  std::cout << "Map: " << std::endl;
-  char str[14] = { ' ', ' ', ' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', '\0' };
+void Map::draw(std::string text) {
+  std::cout << "=============" << std::endl;
+  std::cout << text << std::endl;
+  std::cout << "-------------" << std::endl;
+  char str[14] = { ' ', ' ', ' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', '\0' };
   int n_string_max = kMapSize + 2;
   int n_column_max = kMapSize + 3;
   for (int i = 0; i < n_string_max; i++) {
@@ -37,6 +39,7 @@ void Map::draw() {
     }
     std::cout << '\n';
   }
+  std::cout << "-------------" << std::endl;
 }
 
 int Map::find_ship(int n_column, int n_string) {
@@ -195,4 +198,38 @@ bool Map::check_location(int n_column, int n_string, Ship &ship) {
     }
   }
   return false;
+}
+
+void Map::add_ship() {
+  Ship ship;
+  int size = 0;
+  int marker_i, marker_j;
+  bool begin_found = false;
+  for (int i = 0; i < kMapSize; i++) {
+    for (int j = 0; j < kMapSize; j++) {
+      if (array_[i][j] == '?' && !begin_found) {
+        ship.coordinates_ = {j, i};
+        begin_found = true;
+        size++;
+        marker_i = i;
+        marker_j = j;
+        continue;
+      }
+      if (array_[i][j] == '?' && begin_found) {
+        if (i - marker_i == 1 && ship.coordinates_.first == j) {
+          ship.vertical_ = true;
+          marker_i = i;
+          size++;
+        }
+        if (j - marker_j == 1 && ship.coordinates_.second == i) {
+          ship.vertical_ = false;
+          marker_j = j;
+          size++;
+        }
+      }
+    }
+  }
+  ship.size_ = size;
+  ship.damages_ = {true};
+  ships_.push_back(ship);
 }

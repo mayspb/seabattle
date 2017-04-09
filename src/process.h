@@ -5,11 +5,19 @@
 class Process {
  public:
   Process();
-  Process(std::string input);
-  bool make_fireshot(std::vector<Map*> maps);
+  Process(std::string input, std::vector<Map*> maps);
+  int make_fireshot();
   bool convert_input();
   void mark_destroyed_ship(Map &map, int ship_id);
+  void generate_fireshot();
+  void mark_shot_point(int result);
+  int get_destroyed_ships();
 
   std::string input_;
   std::pair<int, int> shot_point_;
+  std::vector<Map*> maps_;
+
+ private:
+  bool check_location(int n_column, int n_string);
+  std::string convert_output(int n_column, int n_string);
 };
