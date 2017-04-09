@@ -7,6 +7,7 @@ class Ship {
    Ship();
    Ship(int size, bool vertical);
    int check_status();
+   void hit(int x, int y);
 
    int size_;
    bool vertical_;

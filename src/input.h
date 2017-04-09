@@ -9,5 +9,6 @@ class Input {
   bool check_data();
   std::string get_input();
 
+ private:
   std::string input_;
 };

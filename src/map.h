@@ -10,9 +10,10 @@ class Map {
   void draw();
   void create_ships();
   void arrange_ships();
+  int find_ship(int n_column, int n_string);
 
   static const int kMapSize = 10;
-  int array_[kMapSize][kMapSize];
+  char array_[kMapSize][kMapSize];
   std::vector<Ship> ships_;
 
  private:

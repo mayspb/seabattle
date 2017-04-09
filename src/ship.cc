@@ -20,3 +20,15 @@ int Ship::check_status() {
     return 1;
   return 2;
 }
+
+void Ship::hit(int n_column, int n_string) {
+  for (int i = 0; i < size_; i++) {
+    if (vertical_) {
+      if (coordinates_.second + i == n_string)
+        status_[i] = true;
+    } else {
+      if (coordinates_.first + i == n_column)
+        status_[i] = true;
+    }
+  }
+}

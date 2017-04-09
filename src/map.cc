@@ -5,19 +5,62 @@
 #include <time.h>
 #include "map.h"
 
-Map::Map() : array_() {}
-
-void Map::draw() {
-  char well = 43;
-  char damaged = 15;
-  char destroyed = 'X';
-  std::cout << "Map: " << std::endl;
+Map::Map() {
   for (int i = 0; i < kMapSize; i++) {
     for (int j = 0; j < kMapSize; j++) {
-      std::cout << array_[i][j];
+      array_[i][j] = '0';
+    }
+  }
+}
+
+void Map::draw() {
+  std::cout << "Map: " << std::endl;
+  char str[14] = { ' ', ' ', ' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', '\0' };
+  int n_string_max = kMapSize + 2;
+  int n_column_max = kMapSize + 3;
+  for (int i = 0; i < n_string_max; i++) {
+    for (int j = 0; j < n_column_max; j++) {
+      if (i == 0)
+        std::cout << str[j];
+      if (i == 1 && j < 3)
+        std::cout << " ";
+      if (i == 1 && j > 2)
+        std::cout << char(173);
+      if (j == 0 && i < n_string_max-1 && i > 1)
+        std::cout << " ";
+      if (j == 1 && i > 1)
+        std::cout << i-1;
+      if (j == 2 && i > 1)
+        std::cout << char(166);
+      if (i > 1 && j > 2)
+        std::cout << array_[i-2][j-3];
     }
     std::cout << '\n';
   }
+}
+
+int Map::find_ship(int n_column, int n_string) {
+  for (int ship_id = 0; ship_id < ships_.size(); ship_id++) {
+    int ship_col = ships_[ship_id].coordinates_.first;
+    int ship_str = ships_[ship_id].coordinates_.second;
+    if (ships_[ship_id].vertical_) {
+      if (ship_col == n_column) {
+        for (int i = ship_str; i < ship_str + ships_[ship_id].size_; i++) {
+          if (i == n_string)
+            return ship_id;
+        }
+      }
+    } else {
+      if (ship_str == n_string) {
+        for (int i = ship_col; i < ship_col + ships_[ship_id].size_; i++) {
+          if (i == n_column)
+            return ship_id;
+        }
+      }
+    }
+  }
+  std::cout << "Ship was not found!" << std::endl;
+  return -1;
 }
 
 void Map::create_ships() {
@@ -63,13 +106,32 @@ void Map::arrange_ships() {
 }
 
 void Map::place_ship(Ship &ship) {
+  char symbol;
+  switch (ship.size_) {
+  case 1:
+    symbol = 49;
+    break;
+  case 2:
+    symbol = 50;
+    break;
+  case 3:
+    symbol = 51;
+    break;
+  case 4:
+    symbol = 52;
+    break;
+  default:
+    symbol = '?';
+    break;
+  }
+
   if (ship.vertical_) {
     for (int i = ship.coordinates_.second; i < ship.coordinates_.second + ship.size_; i++) {
-      array_[i][ship.coordinates_.first] = ship.size_;
+      array_[i][ship.coordinates_.first] = symbol;
     }
   } else {
     for (int i = ship.coordinates_.first; i < ship.coordinates_.first + ship.size_; i++) {
-      array_[ship.coordinates_.second][i] = ship.size_;
+      array_[ship.coordinates_.second][i] = symbol;
     }
   }
 }
@@ -127,7 +189,7 @@ bool Map::check_location(int n_column, int n_string, Ship &ship) {
 
   for (int i = n_string_min; i <= n_string_max; i++) {
     for (int j = n_column_min; j <= n_column_max; j++) {
-      if (array_[i][j] != 0) {
+      if (array_[i][j] != 48) {
         return true;
       }
     }
