@@ -35,7 +35,7 @@
     <exec executable="msbuild" osfamily="windows" dir="${basedir}/build/debug" failonerror="yes">
       <arg value="/p:Configuration=Debug" />
       <arg value="/p:Platform=x64" />
-      <arg value="Sea_battle.vcxproj" />
+      <arg value="INSTALL.vcxproj" />
     </exec>
 
     <!-- Unix project generation -->
@@ -77,7 +77,7 @@
     <exec executable="msbuild" osfamily="windows" dir="${basedir}/build/release" failonerror="yes">
       <arg value="/p:Configuration=Release" />
       <arg value="/p:Platform=x64" />
-      <arg value="Sea_battle.vcxproj" />
+      <arg value="INSTALL.vcxproj" />
     </exec>
 
     <!-- Unix project generation -->
@@ -115,7 +115,7 @@
 
   <!-- META-TARGETS -->
   <target name="help" depends="check-os">
-    <echo message="Product: SeaBattle-${target.os}-${version.major}.${version.minor}.${version.revision}.${bamboo.build}" />
+    <echo message="Product: SeaBattle-${target.os}-${version.major}.${version.minor}.${version.revision}" />
     <echo message="Targets: clean, build-debug, build-release, [local]" />
   </target>
   <target name="local" depends="check-os, clean, build-debug, build-release" />
