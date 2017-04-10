@@ -1,0 +1,6 @@
+# These values are using for atifact name generation
+
+version.major=1
+version.minor=0
+version.revision=0
+
