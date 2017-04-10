@@ -26,11 +26,11 @@ int Process::make_fireshot() {
       *point1 = kFireshot;
       std::this_thread::sleep_for(std::chrono::milliseconds(500));
     } else {
-      int ship_id = maps_[0]->find_ship(shot_point_.first, shot_point_.second);
+      int ship_id = maps_[1]->find_ship(shot_point_.first, shot_point_.second);
       if (ship_id < 0)
         return -1;
-      maps_[0]->ships_[ship_id].hit(shot_point_.first, shot_point_.second);
-      int ship_status = maps_[0]->ships_[ship_id].check_status();
+      maps_[1]->ships_[ship_id].hit(shot_point_.first, shot_point_.second);
+      int ship_status = maps_[1]->ships_[ship_id].check_status();
       if (ship_status == 0) {
         std::cout << "No damages." << std::endl;
         return -2;
@@ -126,6 +126,10 @@ void Process::generate_fireshot() {
       n_string = i_max;
     if (n_column < 0)
       n_column = j_max;
+    if (n_string >= maps_[2]->kMapSize)
+      n_string = i_damaged;
+    if (n_column >= maps_[2]->kMapSize)
+      n_column = j_damaged;
   } else {
     do {
       n_column = mt_rand() % maps_[2]->kMapSize;
@@ -173,13 +177,4 @@ void Process::mark_shot_point(int result) {
     int ship_id = maps_[2]->find_ship(shot_point_.first, shot_point_.second);
     mark_destroyed_ship(*maps_[2], ship_id);
   }
-}
-
-int Process::get_destroyed_ships() {
-  int count = 0;
-  for (int i = 0; i < maps_[0]->ships_.size(); i++) {
-    if (maps_[0]->ships_[i].check_status() == 2)
-      count++;
-  }
-  return count;
 }

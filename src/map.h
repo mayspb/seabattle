@@ -13,6 +13,7 @@ class Map {
   void arrange_ships();
   int find_ship(int n_column, int n_string);
   void add_ship();
+  int get_destroyed_ships();
 
   static const int kMapSize = 10;
   char array_[kMapSize][kMapSize];

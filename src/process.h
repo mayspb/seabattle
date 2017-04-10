@@ -11,7 +11,6 @@ class Process {
   void mark_destroyed_ship(Map &map, int ship_id);
   void generate_fireshot();
   void mark_shot_point(int result);
-  int get_destroyed_ships();
 
   std::string input_;
   std::pair<int, int> shot_point_;

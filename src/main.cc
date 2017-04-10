@@ -31,7 +31,7 @@ int main()
         return 1;
       }
       int result = process.make_fireshot();
-      if (process.get_destroyed_ships() == 10) {
+      if (map2.get_destroyed_ships() == 10) {
         std::cout << "Game over! You won!" << std::endl;
         return 0;
       }

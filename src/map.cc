@@ -40,6 +40,8 @@ void Map::draw(std::string text) {
     std::cout << '\n';
   }
   std::cout << "-------------" << std::endl;
+  std::cout << (10 - get_destroyed_ships()) << " ships to find." << std::endl;
+  std::cout << "-------------" << std::endl;
 }
 
 int Map::find_ship(int n_column, int n_string) {
@@ -230,6 +232,16 @@ void Map::add_ship() {
     }
   }
   ship.size_ = size;
-  ship.damages_ = {true};
+  for (int i = 0; i < size; i++)
+    ship.damages_.push_back(true);
   ships_.push_back(ship);
+}
+
+int Map::get_destroyed_ships() {
+  int count = 0;
+  for (int i = 0; i < ships_.size(); i++) {
+    if (ships_[i].check_status() == 2)
+      count++;
+  }
+  return count;
 }
