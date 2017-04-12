@@ -1,6 +1,7 @@
 #include <iostream>
 #include <regex>
 #include <algorithm>
+#include <conio.h>
 #include "input.h"
 
 Input::Input() {}
@@ -22,7 +23,8 @@ std::string Input::get_input() {
 
 int Input::get_answer() {
   do {
-    input_data("Input answer: ");
+    char answer = _getch();
+    input_ = answer;
   } while (!check_answer());
   return std::stoi(input_);
 }

@@ -7,7 +7,7 @@ class Ship {
    Ship();
    Ship(int size, bool vertical);
    int check_status();
-   void hit(int x, int y);
+   void mark_damaged_part(int x, int y);
 
    int size_;
    bool vertical_;

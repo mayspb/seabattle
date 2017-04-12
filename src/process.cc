@@ -29,7 +29,7 @@ int Process::make_fireshot() {
       int ship_id = maps_[1]->find_ship(shot_point_.first, shot_point_.second);
       if (ship_id < 0)
         return -1;
-      maps_[1]->ships_[ship_id].hit(shot_point_.first, shot_point_.second);
+      maps_[1]->ships_[ship_id].mark_damaged_part(shot_point_.first, shot_point_.second);
       int ship_status = maps_[1]->ships_[ship_id].check_status();
       if (ship_status == 0) {
         std::cout << "No damages." << std::endl;
@@ -96,46 +96,48 @@ void Process::generate_fireshot() {
       }
     }
   }
-  if (present_damage) {
-    int j_max = j_damaged;
-    while (maps_[2]->array_[i_damaged][j_max] == kDamaged) {
-      j_max++;
-    }
-    int i_max = i_damaged;
-    while (maps_[2]->array_[i_max][j_damaged] == kDamaged) {
-      i_max++;
-    }
-    if (i_max - i_damaged > 1) {
-      n_string = rand() % 2 ? (i_damaged - 1) : i_max;
-      n_column = j_damaged;
-    }
-    if (j_max - j_damaged > 1) {
-      n_string = i_damaged;
-      n_column = rand() % 2 ? (j_damaged - 1) : j_max;
-    }
-    if ((i_max - i_damaged) == (j_max - j_damaged)) {
-      if (rand() % 2) {
+  do {
+    if (present_damage) {
+      int j_max = j_damaged;
+      while (maps_[2]->array_[i_damaged][j_max] == kDamaged) {
+        j_max++;
+      }
+      int i_max = i_damaged;
+      while (maps_[2]->array_[i_max][j_damaged] == kDamaged) {
+        i_max++;
+      }
+      if (i_max - i_damaged > 1) {
         n_string = rand() % 2 ? (i_damaged - 1) : i_max;
         n_column = j_damaged;
-      } else {
+      }
+      if (j_max - j_damaged > 1) {
         n_string = i_damaged;
         n_column = rand() % 2 ? (j_damaged - 1) : j_max;
       }
-    }
-    if (n_string < 0)
-      n_string = i_max;
-    if (n_column < 0)
-      n_column = j_max;
-    if (n_string >= maps_[2]->kMapSize)
-      n_string = i_damaged;
-    if (n_column >= maps_[2]->kMapSize)
-      n_column = j_damaged;
-  } else {
-    do {
+      if ((i_max - i_damaged) == (j_max - j_damaged)) {
+        if (rand() % 2) {
+          n_string = rand() % 2 ? (i_damaged - 1) : i_max;
+          n_column = j_damaged;
+        } else {
+          n_string = i_damaged;
+          n_column = rand() % 2 ? (j_damaged - 1) : j_max;
+        }
+      }
+      if (n_string < 0)
+        n_string = i_max;
+      if (n_column < 0)
+        n_column = j_max;
+      if (n_string >= maps_[2]->kMapSize)
+        n_string = i_damaged;
+      if (n_column >= maps_[2]->kMapSize)
+        n_column = j_damaged;
+    } else {
       n_column = mt_rand() % maps_[2]->kMapSize;
       n_string = mt_rand() % maps_[2]->kMapSize;
-    } while (check_location(n_column, n_string));
-  }
+    }
+    std::cout << ".";
+  } while (check_location(n_column, n_string));
+
   shot_point_ = {n_column, n_string};
   std::cout << "Fireshot on: " << convert_output(n_column, n_string) << std::endl;
   std::cout << "Please, choose one of answers:" << std::endl;
@@ -148,14 +150,14 @@ bool Process::check_location(int n_column, int n_string) {
   char symbol = maps_[2]->array_[n_string][n_column];
   if (symbol == kFireshot || symbol == kDamaged || symbol == kDestroyed)
     return true;
-  // Here should be processing case, when ship is damaged
-  for (int i = 0; i < maps_[2]->kMapSize; i++) {
-    for (int j = 0; j < maps_[2]->kMapSize; j++) {
-      if (maps_[2]->array_[i][j] == kDamaged) {
-        return true;
-      }
-    }
-  }
+  //// Here should be processing case, when ship is damaged
+  //for (int i = 0; i < maps_[2]->kMapSize; i++) {
+  //  for (int j = 0; j < maps_[2]->kMapSize; j++) {
+  //    if (maps_[2]->array_[i][j] == kDamaged) {
+  //      return true;
+  //    }
+  //  }
+  //}
   return false;
 }
 

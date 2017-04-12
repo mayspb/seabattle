@@ -21,7 +21,7 @@ int Ship::check_status() {
   return 2;
 }
 
-void Ship::hit(int n_column, int n_string) {
+void Ship::mark_damaged_part(int n_column, int n_string) {
   for (int i = 0; i < size_; i++) {
     if (vertical_) {
       if (coordinates_.second + i == n_string)
