@@ -21,7 +21,6 @@ int main()
 
   Input input;
   for (;;) {
-    system("cls");
     map2.draw("Computer's map: ");
     input.input_data("Input fireshot: ");
     if (input.check_data()) {
@@ -42,7 +41,6 @@ int main()
       if (result == 1)
         continue;
       for (;;) {
-        system("cls");
         user_map.draw("User's map: ");
         process.generate_fireshot();
         result = input.get_answer();

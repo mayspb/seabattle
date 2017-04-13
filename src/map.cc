@@ -5,6 +5,12 @@
 #include <time.h>
 #include "map.h"
 
+#ifdef _WIN32
+  const char* cmd = "cls";
+#else
+  const char* cmd = "clear";
+#endif
+
 Map::Map() {
   for (int i = 0; i < kMapSize; i++) {
     for (int j = 0; j < kMapSize; j++) {
@@ -14,6 +20,7 @@ Map::Map() {
 }
 
 void Map::draw(std::string text) {
+  system(cmd);
   std::cout << "=============" << std::endl;
   std::cout << text << std::endl;
   std::cout << "-------------" << std::endl;

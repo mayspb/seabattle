@@ -135,29 +135,19 @@ void Process::generate_fireshot() {
       n_column = mt_rand() % maps_[2]->kMapSize;
       n_string = mt_rand() % maps_[2]->kMapSize;
     }
-    std::cout << ".";
   } while (check_location(n_column, n_string));
-
   shot_point_ = {n_column, n_string};
   std::cout << "Fireshot on: " << convert_output(n_column, n_string) << std::endl;
   std::cout << "Please, choose one of answers:" << std::endl;
-  std::cout << "1) Missed." << std::endl;
-  std::cout << "2) Ship is damaged." << std::endl;
-  std::cout << "3) Ship is destroyed." << std::endl;
+  std::cout << " 1 - Missed." << std::endl;
+  std::cout << " 2 - Ship is damaged." << std::endl;
+  std::cout << " 3 - Ship is destroyed." << std::endl;
 }
 
 bool Process::check_location(int n_column, int n_string) {
   char symbol = maps_[2]->array_[n_string][n_column];
   if (symbol == kFireshot || symbol == kDamaged || symbol == kDestroyed)
     return true;
-  //// Here should be processing case, when ship is damaged
-  //for (int i = 0; i < maps_[2]->kMapSize; i++) {
-  //  for (int j = 0; j < maps_[2]->kMapSize; j++) {
-  //    if (maps_[2]->array_[i][j] == kDamaged) {
-  //      return true;
-  //    }
-  //  }
-  //}
   return false;
 }
 
