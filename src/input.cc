@@ -1,7 +1,11 @@
 #include <iostream>
 #include <regex>
 #include <algorithm>
+
+#ifdef _WIN32
 #include <conio.h>
+#endif
+
 #include "input.h"
 
 Input::Input() {}
@@ -23,8 +27,12 @@ std::string Input::get_input() {
 
 int Input::get_answer() {
   do {
+    #ifdef _WIN32
     char answer = _getch();
     input_ = answer;
+    #else
+    std::getline(std::cin, input_);
+    #endif
   } while (!check_answer());
   return std::stoi(input_);
 }
